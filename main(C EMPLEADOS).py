@@ -21,7 +21,7 @@ def ia():
     if y1 <= fdp_ia(x1):
         return x1
     else:
-        return ia()
+        return 0.7 * ia()
 
 
 def fdp_ta1(x):
@@ -61,9 +61,9 @@ def ta2():
 
 
 ## VARIABLES DE CONTROL
-m = 5
+m = 30
 n = m
-c = 1
+c = 2
 
 ## CONDICIONES INICIALES
 tf = 8640000  ##10 dias 864000
