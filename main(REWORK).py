@@ -8,8 +8,7 @@ e = math.exp(1)
 
 def fdp_ia(x):
     ##exp = math.pow(((x - 1221.2273) / 402.7004), 2)
-    return (math.pow(e, ((-1 / 2) * math.pow(((x - 1221.2273) / 402.7004), 2)))) / (
-            402.7004 * math.pow(6.2838, (1 / 2)))
+    return (math.pow(e, ((-1 / 2) * math.pow(((x - 1221.2273) / 402.7004), 2)))) / (402.7004 * math.pow(6.2838, (1 / 2)))
 
 
 def ia():
@@ -26,8 +25,7 @@ def ia():
 
 def fdp_ta1(x):
     ##exp = math.pow(((x - 2436.0588) / 251.2740), 2)
-    return (math.pow(e, ((-1 / 2) * math.pow(((x - 2436.0588) / 251.2740), 2)))) / (
-            251.2740 * math.pow(6.2838, (1 / 2)))
+    return (math.pow(e, ((-1 / 2) * math.pow(((x - 2436.0588) / 251.2740), 2)))) / (251.2740 * math.pow(6.2838, (1 / 2)))
 
 
 def ta1():
@@ -60,50 +58,35 @@ def ta2():
         return ta2()
 
 
-## VARIABLES DE CONTROL
-m = 5
-n = m
-c = 7
-
 ## CONDICIONES INICIALES
 tf = 8640000  ##10 dias 864000
 hv = tf + 100000000000000000
 t = 0
 tpll = 0
-tps = []
-for i in range(c):
-    tps.append(hv)
-tpsp = hv
+tps1 = hv
+tps2 = hv
 sps = 0
 nt = 0
 ns1 = 0
 ns2 = 0
-sto = []
-for i in range(c):
-    sto.append(0)
-ito = []
-for i in range(c):
-    ito.append(0)
+sto = 0
+ito = 0
 sta = 0
 ttep = 0
 tant = 0
 nc1 = 0
 nc2 = 0
 
+## VARIABLES DE CONTROL
+m = 20
+n = m
+
 
 ## ALGORITMO
 
-def buscar_puesto_libre():
-    for x in range(c):
-        print(str(x) + " " + str(tps[x]))
-        if tps[x] == hv:
-            return x
-        ##else:
-        # print("la cague")
-
 
 def llegada():
-    global t, sps, tpll, nt, ns1, ns2, hv, tps1, tpsp, sto, ito, sta, ttep
+    global t, sps, tpll, nt, ns1, ns2, hv, tps1, tps2, sto, ito, sta, ttep
 
     t = tpll
     sps = sps + (t - tant) * (ns1 + ns2)
@@ -115,19 +98,16 @@ def llegada():
         ns1 = ns1 + 1
     else:
         ns2 = ns2 + 1
-    if (ns1 + ns2 <= c and tpsp == hv) or (ns1 + ns2 <= c + 1 and tpsp != hv):
-        ##print("ns " + str(ns1+ns2)+ " " + str((ns1 + ns2 <= c and tpsp == hv)) + " " + str((ns1 + ns2 <= c + 1 and tpsp != hv)))
-        x = buscar_puesto_libre()
+    if (ns1 + ns2 == 1 and tps2 == hv) or (ns1 + ns2 == 2 and tps2 != hv):
         _ta1 = ta1()
-        tps[x] = t + _ta1
-        sto[x] = sto[x] + t - ito[x]
+        tps1 = t + _ta1
+        sto = sto + t - ito
         sta = sta + _ta1
         return
     else:
-        if ns1 + ns2 == m + 2 and tpsp == hv:
-            ##print("ns " + str(ns1 + ns2))
+        if ns1 + ns2 == m + 2 and tps2 == hv:
             _ta2 = ta2()
-            tpsp = t + _ta2
+            tps2 = t + _ta2
             sta = sta + _ta2
             ttep = ttep + _ta2
             return
@@ -135,74 +115,61 @@ def llegada():
             return
 
 
-def menor_tps():
-    menor = 0
-    for i in range(c):
-        if tps[menor] > tps[i]:
-            menor = i
-    return i
-
-
 while t < tf:
-    i = menor_tps()
     tant = t
-    if tps[i] <= tpsp:
-        if tpll <= tps[i]:
+    if tps1 <= tps2:
+        if tpll <= tps1:
             llegada()
         else:
-            t = tps[i]
+            t = tps1
             sps = sps + (t - tant) * (ns1 + ns2)
-
+            nc1 = nc1 + 1
             if ns1 > 0:
                 ns1 = ns1 - 1
             else:
                 ns2 = ns2 - 1
-            if ns1 + ns2 > c or (ns1 + ns2 == c and tpsp == hv):
+            if ns1 + ns2 > 1 or (ns1 + ns2 == 1 and tps2 == hv):
                 __ta1 = ta1()
-                tps[i] = t + __ta1
+                tps1 = t + __ta1
                 sta = sta + __ta1
             else:
-                tps[i] = hv
-                ito[i] = t
+                tps1 = hv
+                ito = t
+
+
     else:
-        if tpll <= tpsp:
+        if tpll <= tps2:
             llegada()
         else:
-            t = tpsp
+            t = tps2
             sps = sps + (t - tant) * (ns1 + ns2)
-
+            nc2 = nc2 + 1
             if ns1 > 0:
                 ns1 = ns1 - 1
             else:
                 ns2 = ns2 - 1
             if ns1 + ns2 > n:
                 __ta2 = ta2()
-                tpsp = t + __ta2
+                tps2 = t + __ta2
                 sta = sta + __ta2
                 ttep = ttep + __ta2
             else:
-                tpsp = hv
+                tps2 = hv
+
 
 pec = (sps - sta) / nt
-##print(sps)
-##print(sta)
-
-pto = []
-
-for i in range(c):
-    pto.append((100 * sto[i]) / t)
-
-pttep = (100 * ttep) / t
-ppct = 100 * (nc1 + nc2) / nt
-ppc1 = 100 * (nc1) / nt
-ppc2 = 100 * (nc2) / nt
+print(sps)
+print(sta)
+pto = (100 * sto) / t
+pttep = (100*ttep) / t
+ppct = 100*(nc1+nc2)/nt
+ppc1 = 100*(nc1)/nt
+ppc2 = 100*(nc2)/nt
 print("Variable de control M: " + str(m))
 print("Variable de control N: " + str(n))
-print("PEC(minutos): " + str(pec / 60))
-for i in range(c):
-    print("PTO " + str(i + 1) + ": " + str(pto[i]))
+print("PEC(minutos): " + str(pec/60))
+print("PTO: " + str(pto))
 print("PTTEP: " + str(pttep))
-
 ##print("PPCT: "+ str(ppct))
 ##print("PPC1: "+ str(ppc1))
 ##print("PPC2: "+ str(ppc2))
