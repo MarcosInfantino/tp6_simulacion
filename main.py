@@ -19,7 +19,7 @@ def ia():
     x1 = 900 + 1500 * r1
     y1 = max_ia * r2
     if y1 <= fdp_ia(x1):
-        return 1.2 * x1
+        return x1
     else:
         return ia()
 
@@ -63,11 +63,11 @@ def ta2():
 ## VARIABLES DE CONTROL
 m = 5
 n = m
-c = 7
+c = 1
 
 ## CONDICIONES INICIALES
 tf = 8640000  ##10 dias 864000
-hv = tf + 100000000000000000
+hv = tf + 1
 t = 0
 tpll = 0
 tps = []
@@ -140,7 +140,7 @@ def menor_tps():
     for i in range(c):
         if tps[menor] > tps[i]:
             menor = i
-    return i
+    return menor
 
 
 while t < tf:
@@ -203,6 +203,7 @@ for i in range(c):
     print("PTO " + str(i + 1) + ": " + str(pto[i]))
 print("PTTEP: " + str(pttep))
 
+print(ns1+ns2)
 ##print("PPCT: "+ str(ppct))
 ##print("PPC1: "+ str(ppc1))
 ##print("PPC2: "+ str(ppc2))
