@@ -170,7 +170,8 @@ while t < tf:
                 tpsp = hv
 
 pec = (sps - sta) / nt
-
+if pec <0:
+    pec = 0.0
 
 pto = []
 
