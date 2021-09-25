@@ -7,32 +7,31 @@ e = math.exp(1)
 ## DATOS
 
 def fdp_ia(x):
-    return (math.pow(e, ((-1 / 2) * math.pow(((x - 1221.2273) / 402.7004), 2)))) / (
-            402.7004 * math.pow(6.2838, (1 / 2)))
+    return (math.pow(e, ((-1/2)*(math.pow((x-1713.9477)/281.3620, 2)))))/(281.3620*math.pow(6.2838, (1/2)))
+
 
 
 def ia():
-    max_ia = 0.001
+    max_ia = 0.0014
     r1 = random.random()
     r2 = random.random()
-    x1 = 900 + 1500 * r1
+    x1 = 1142 + 1137 * r1
     y1 = max_ia * r2
     if y1 <= fdp_ia(x1):
         return x1
     else:
-        return 0.7 * ia()
+        return ia()
 
 
 def fdp_ta1(x):
-    return (math.pow(e, ((-1 / 2) * math.pow(((x - 2436.0588) / 251.2740), 2)))) / (
-            251.2740 * math.pow(6.2838, (1 / 2)))
+    return (math.pow(e, ((-1/2)*(math.pow((x-2546.4755)/230.1838, 2)))))/(230.1838*math.pow(6.2838, (1/2)))
 
 
 def ta1():
-    max_ta1 = 0.0016
+    max_ta1 = 0.0017
     r1 = random.random()
     r2 = random.random()
-    x1 = 1996 + 1050 * r1
+    x1 = 2103 + 896 * r1
     y1 = max_ta1 * r2
     if y1 <= fdp_ta1(x1):
         return x1
@@ -40,27 +39,18 @@ def ta1():
         return ta1()
 
 
-def fdp_ta2(x):
-    return (math.pow(e, ((-1 / 2) * math.pow((x - 3579.8636) / 401.6324, 2)))) / (401.6324 * math.pow(6.2838, (1 / 2)))
 
 
 def ta2():
-    max_ta2 = 0.001
-    r1 = random.random()
-    r2 = random.random()
-    x1 = 2505 + 1695 * r1
-    y1 = max_ta2 * r2
+    r = random.random()
+    return 1175*r + 3004
 
-    if y1 <= fdp_ta2(x1):
-        return x1
-    else:
-        return ta2()
 
 
 ## VARIABLES DE CONTROL
-m = 3
+m = 15
 n = m
-c = 2
+c = 3
 
 ## CONDICIONES INICIALES
 tf = 8640000  ##10 dias 864000
@@ -199,5 +189,4 @@ for i in range(c):
     print("PTO " + str(i + 1) + ": " + str(pto[i]))
 print("PTTEP: " + str(pttep))
 
-print(ns1+ns2)
 

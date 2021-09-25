@@ -2,10 +2,10 @@ from datetime import datetime
 from datetime import timedelta
 from random import randint
 
-cota_sup = 70 * 60
-cota_sup_media = 65*60
-cota_inf_media = 55*60
-cota_inf = 50 * 60
+cota_sup = 38 * 60
+cota_sup_media = 32*60
+cota_inf_media = 25*60
+cota_inf = 19 * 60
 
 randoms = []
 fechas = []
