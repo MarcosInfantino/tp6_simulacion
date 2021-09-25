@@ -7,7 +7,6 @@ e = math.exp(1)
 ## DATOS
 
 def fdp_ia(x):
-    ##exp = math.pow(((x - 1221.2273) / 402.7004), 2)
     return (math.pow(e, ((-1 / 2) * math.pow(((x - 1221.2273) / 402.7004), 2)))) / (
             402.7004 * math.pow(6.2838, (1 / 2)))
 
@@ -25,7 +24,6 @@ def ia():
 
 
 def fdp_ta1(x):
-    ##exp = math.pow(((x - 2436.0588) / 251.2740), 2)
     return (math.pow(e, ((-1 / 2) * math.pow(((x - 2436.0588) / 251.2740), 2)))) / (
             251.2740 * math.pow(6.2838, (1 / 2)))
 
@@ -43,7 +41,6 @@ def ta1():
 
 
 def fdp_ta2(x):
-    ##exp = math.pow((x - 3579.8636) / 401.6324, 2)
     return (math.pow(e, ((-1 / 2) * math.pow((x - 3579.8636) / 401.6324, 2)))) / (401.6324 * math.pow(6.2838, (1 / 2)))
 
 
@@ -61,7 +58,7 @@ def ta2():
 
 
 ## VARIABLES DE CONTROL
-m = 30
+m = 3
 n = m
 c = 2
 
@@ -95,11 +92,10 @@ nc2 = 0
 
 def buscar_puesto_libre():
     for x in range(c):
-        print(str(x) + " " + str(tps[x]))
+
         if tps[x] == hv:
             return x
-        ##else:
-        # print("la cague")
+
 
 
 def llegada():
@@ -116,7 +112,7 @@ def llegada():
     else:
         ns2 = ns2 + 1
     if (ns1 + ns2 <= c and tpsp == hv) or (ns1 + ns2 <= c + 1 and tpsp != hv):
-        ##print("ns " + str(ns1+ns2)+ " " + str((ns1 + ns2 <= c and tpsp == hv)) + " " + str((ns1 + ns2 <= c + 1 and tpsp != hv)))
+
         x = buscar_puesto_libre()
         _ta1 = ta1()
         tps[x] = t + _ta1
@@ -125,7 +121,7 @@ def llegada():
         return
     else:
         if ns1 + ns2 == m + 2 and tpsp == hv:
-            ##print("ns " + str(ns1 + ns2))
+
             _ta2 = ta2()
             tpsp = t + _ta2
             sta = sta + _ta2
@@ -184,8 +180,7 @@ while t < tf:
                 tpsp = hv
 
 pec = (sps - sta) / nt
-##print(sps)
-##print(sta)
+
 
 pto = []
 
@@ -196,6 +191,7 @@ pttep = (100 * ttep) / t
 ppct = 100 * (nc1 + nc2) / nt
 ppc1 = 100 * (nc1) / nt
 ppc2 = 100 * (nc2) / nt
+print("Variable de control C: " + str(c))
 print("Variable de control M: " + str(m))
 print("Variable de control N: " + str(n))
 print("PEC(minutos): " + str(pec / 60))
@@ -204,6 +200,4 @@ for i in range(c):
 print("PTTEP: " + str(pttep))
 
 print(ns1+ns2)
-##print("PPCT: "+ str(ppct))
-##print("PPC1: "+ str(ppc1))
-##print("PPC2: "+ str(ppc2))
+
