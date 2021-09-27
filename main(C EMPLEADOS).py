@@ -27,7 +27,7 @@ def ta2():
 ## VARIABLES DE CONTROL
 m = 15
 n = m
-c = 3
+c = 1
 
 ## CONDICIONES INICIALES
 tf = 8640000  ##10 dias 864000
@@ -87,7 +87,7 @@ def llegada():
         sta = sta + _ta1
         return
     else:
-        if ns1 + ns2 == m + 2 and tpsp == hv:
+        if ns1 + ns2 == m + c + 1 and tpsp == hv:
 
             _ta2 = ta2()
             tpsp = t + _ta2
@@ -138,7 +138,7 @@ while t < tf:
                 ns1 = ns1 - 1
             else:
                 ns2 = ns2 - 1
-            if ns1 + ns2 > n:
+            if ns1 + ns2 > n + c - 1:
                 __ta2 = ta2()
                 tpsp = t + __ta2
                 sta = sta + __ta2
