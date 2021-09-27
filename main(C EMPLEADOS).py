@@ -1,45 +1,22 @@
 import random
 import math
+from scipy import special
+
 
 e = math.exp(1)
 
 
 ## DATOS
 
-def fdp_ia(x):
-    return (math.pow(e, ((-1/2)*(math.pow((x-1713.9477)/281.3620, 2)))))/(281.3620*math.pow(6.2838, (1/2)))
-
 
 
 def ia():
-    max_ia = 0.0014
-    r1 = random.random()
-    r2 = random.random()
-    x1 = 1142 + 1137 * r1
-    y1 = max_ia * r2
-    if y1 <= fdp_ia(x1):
-        return x1
-    else:
-        return ia()
-
-
-def fdp_ta1(x):
-    return (math.pow(e, ((-1/2)*(math.pow((x-2546.4755)/230.1838, 2)))))/(230.1838*math.pow(6.2838, (1/2)))
-
+    r = random.random()
+    return 1713.9477 + 281.3620 * (math.pow(2, (1 / 2))) * special.erfinv(2 * r - 1)
 
 def ta1():
-    max_ta1 = 0.0017
-    r1 = random.random()
-    r2 = random.random()
-    x1 = 2103 + 896 * r1
-    y1 = max_ta1 * r2
-    if y1 <= fdp_ta1(x1):
-        return x1
-    else:
-        return ta1()
-
-
-
+    r = random.random()
+    return 2546.4755+230.1838*(math.pow(2, (1/2)))*special.erfinv(2*r-1)
 
 def ta2():
     r = random.random()
